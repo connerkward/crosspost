@@ -1,0 +1,31 @@
+{
+  "name": "crosspost",
+  "version": "1.0.0",
+  "description": "Platform for cross-posting content across multiple social networks and platforms.",
+  "main": "dist/cli.js",
+  "bin": {
+    "crosspost": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli.ts",
+    "start": "node dist/cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/connerkward/crosspost.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/connerkward/crosspost/issues"
+  },
+  "homepage": "https://github.com/connerkward/crosspost#readme",
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}
