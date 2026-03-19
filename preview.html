@@ -519,6 +519,50 @@
     white-space: pre-wrap;
   }
 
+  .discord-embed-img {
+    max-width: 400px;
+    max-height: 300px;
+    border-radius: 4px;
+    margin-top: 8px;
+  }
+
+  /* Twitter image */
+  .tweet-image {
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 12px;
+    border: 1px solid #2f3336;
+  }
+
+  .tweet-image img {
+    width: 100%;
+    display: block;
+    max-height: 510px;
+    object-fit: cover;
+  }
+
+  /* Reddit image */
+  .reddit-post-image {
+    margin: 8px 0;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #000;
+    text-align: center;
+  }
+
+  .reddit-post-image img {
+    max-width: 100%;
+    max-height: 512px;
+    object-fit: contain;
+  }
+
+  /* Input thumbnail */
+  #image-preview-thumb img {
+    max-height: 60px;
+    border-radius: 4px;
+    border: 1px solid #1a4a8a;
+  }
+
   /* ============ VIEWPORT TOGGLE ============ */
   .viewport-toggle {
     display: flex;
@@ -575,6 +619,13 @@
 
   <label>Subreddit (for Reddit)</label>
   <input type="text" id="inp-subreddit" value="r/selfhosted" oninput="render()">
+
+  <label>Image (URL or file)</label>
+  <div style="display:flex;gap:8px;align-items:center">
+    <input type="text" id="inp-image-url" placeholder="https://... or pick a file →" oninput="render()" style="flex:1">
+    <input type="file" id="inp-image-file" accept="image/*" onchange="loadImageFile(this)" style="width:auto;flex:none">
+  </div>
+  <div id="image-preview-thumb" style="margin-top:8px"></div>
 </div>
 
 <div class="viewport-toggle">
@@ -636,6 +687,7 @@
           <div class="reddit-content">
             <div class="reddit-meta" id="reddit-meta"></div>
             <div class="reddit-post-title" id="reddit-title"></div>
+            <div class="reddit-post-image" id="reddit-image" style="display:none"></div>
             <div class="reddit-post-body" id="reddit-body"></div>
             <div class="reddit-actions">
               <button class="reddit-action-btn">💬 0 Comments</button>
@@ -666,6 +718,7 @@
             </div>
           </div>
           <div class="tweet-body" id="tweet-body"></div>
+          <div class="tweet-image" id="tweet-image" style="display:none"></div>
           <div class="tweet-link-card" id="tweet-link-card">
             <div class="tweet-link-card-body">
               <div class="tweet-link-card-domain" id="tweet-link-domain"></div>
@@ -712,6 +765,7 @@
             <div class="discord-embed" id="discord-embed">
               <div class="discord-embed-title" id="discord-embed-title"></div>
               <div class="discord-embed-desc" id="discord-embed-desc"></div>
+              <img class="discord-embed-img" id="discord-embed-img" style="display:none">
             </div>
           </div>
         </div>
@@ -728,15 +782,54 @@ function extractDomain(url) {
   try { return new URL(url).hostname; } catch { return url; }
 }
 
+let localImageData = null;
+
+function loadImageFile(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    localImageData = e.target.result;
+    document.getElementById('inp-image-url').value = '';
+    render();
+  };
+  reader.readAsDataURL(file);
+}
+
+function getImageSrc() {
+  const urlVal = val('inp-image-url');
+  return urlVal || localImageData || null;
+}
+
+function setImageEl(el, src) {
+  if (src) {
+    if (el.tagName === 'IMG') {
+      el.src = src;
+      el.style.display = '';
+    } else {
+      el.innerHTML = `<img src="${src}">`;
+      el.style.display = '';
+    }
+  } else {
+    el.style.display = 'none';
+    if (el.tagName !== 'IMG') el.innerHTML = '';
+  }
+}
+
 function render() {
   const title = val('inp-title');
   const url = val('inp-url');
   const body = val('inp-body');
   const author = val('inp-author');
   const subreddit = val('inp-subreddit');
+  const image = getImageSrc();
   const domain = extractDomain(url);
   const now = new Date();
   const timeStr = now.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true, month: 'short', day: 'numeric', year: 'numeric' });
+
+  // Input thumbnail
+  const thumb = document.getElementById('image-preview-thumb');
+  thumb.innerHTML = image ? `<img src="${image}">` : '';
 
   // HN
   document.getElementById('hn-title').innerHTML =
@@ -746,7 +839,10 @@ function render() {
   document.getElementById('hn-subtext').innerHTML =
     `1 point by <a href="#">${author}</a> 0 minutes ago | <a href="#">hide</a> | <a href="#">discuss</a>`;
 
+  // HN has no image support — nothing to add
+
   // Reddit
+  setImageEl(document.getElementById('reddit-image'), image);
   document.getElementById('reddit-meta').innerHTML =
     `<a class="reddit-sub" href="#">${subreddit}</a> · Posted by <a class="reddit-user" href="#">u/${author}</a> · just now`;
   document.getElementById('reddit-title').innerHTML = title +
@@ -760,6 +856,9 @@ function render() {
     'display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;color:#fff;background:#1d9bf0';
   document.getElementById('tweet-name').innerHTML = author;
   document.getElementById('tweet-handle').textContent = `@${author}`;
+
+  // Tweet image (shown above link card, like native Twitter)
+  setImageEl(document.getElementById('tweet-image'), image);
 
   // Compose tweet: body, then URL as a link card
   document.getElementById('tweet-body').textContent = body;
@@ -781,6 +880,7 @@ function render() {
   document.getElementById('discord-text').textContent = url || '';
   document.getElementById('discord-embed-title').innerHTML = `<a href="${url}">${title}</a>`;
   document.getElementById('discord-embed-desc').textContent = body;
+  setImageEl(document.getElementById('discord-embed-img'), image);
 }
 
 function setViewport(mode) {
