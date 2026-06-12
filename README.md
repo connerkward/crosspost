@@ -46,8 +46,14 @@ The same content, reshaped per platform:
 | [Twitter / X](platforms/twitter.md) | Tweet / thread | OAuth 1.0a | 280 chars, t.co URL wrapping |
 | [Discord](platforms/discord.md) | Webhook message / embed | Webhook URL | Rich embeds, up to 2000 chars |
 | [LinkedIn](platforms/linkedin.md) | Text / article share | OAuth 2.0 (`w_member_social`) | 3000 chars, professional tone |
+| [Smithery](platforms/smithery.md) | MCP registry | `@smithery/cli` publish | Largest MCP registry; `smithery.yaml` in repo |
+| [Official MCP Registry](platforms/mcp-registry-official.md) | MCP registry | `mcp-publisher` CLI (GitHub OAuth) | Canonical `registry.modelcontextprotocol.io`; `server.json` |
+| [PulseMCP](platforms/pulsemcp.md) | MCP directory | Ingests official registry / submit form | Read-only aggregator; no API |
 | [Glama](platforms/mcp-glama.md) | MCP registry | GitHub URL submission | Indexes MCP servers from GitHub |
 | [mcp.so](platforms/mcp-so.md) | MCP directory | GitHub URL submission | MCP server directory |
+| [Cline Marketplace](platforms/cline-mcp-marketplace.md) | MCP marketplace (in-editor) | GitHub issue submission | Needs 400×400 PNG logo + install README |
+| [awesome-mcp-servers](platforms/awesome-mcp-servers.md) | Curated GitHub list | Fork → PR | `punkpeye/awesome-mcp-servers`; alphabetical entry |
+| [mcp-get](platforms/mcp-get.md) | MCP registry (deprecated) | — | Abandoned; points to Smithery |
 | [ComfyUI Registry](platforms/comfyui-registry.md) | Package publish | `comfy-cli` | For ComfyUI custom nodes only |
 
 ## Adding a platform
