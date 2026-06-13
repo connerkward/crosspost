@@ -1,8 +1,18 @@
 # Reddit
 
-## Auth
-- Create a "script" app at https://www.reddit.com/prefs/apps
+> **Self-service API access is closed (Reddit "Responsible Builder Policy", ~Nov 11 2025).**
+> Creating a new "script" app at `prefs/apps` no longer yields working credentials — new OAuth
+> apps require **manual pre-approval** via a Developer Support request (describe use case,
+> subreddits, volume; ~7-day review). Personal cross-post/announce bots generally **do not
+> qualify**. Only credentials minted **before Nov 2025** are grandfathered and still work.
+> reddit.com is also blocked in the Claude-in-Chrome tool, so there is **no agent-automatable
+> path** for new accounts. Practical options: (a) reuse a pre-Nov-2025 app's creds below;
+> (b) post to Reddit **manually** in your own browser; (c) skip Reddit.
+
+## Auth (only works with grandfathered pre-Nov-2025 credentials)
+- If you have an **existing** script app from before Nov 2025: https://www.reddit.com/prefs/apps
 - Env: `REDDIT_CLIENT_ID`, `REDDIT_CLIENT_SECRET`, `REDDIT_USERNAME`, `REDDIT_PASSWORD`
+- 2FA accounts: append the current OTP to the password (`password:123456`) — expires fast, poor for automation.
 
 ## API
 - OAuth token: POST `https://www.reddit.com/api/v1/access_token` with `grant_type=password`, username, password. Basic auth header with client_id:client_secret.

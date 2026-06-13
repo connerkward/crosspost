@@ -42,7 +42,7 @@ The same content, reshaped per platform:
 | Platform | Type | Auth | Notes |
 |----------|------|------|-------|
 | [Hacker News](platforms/hackernews.md) | Link / text post | Cookie session (`HN_USERNAME`/`HN_PASSWORD`) | "Show HN:" prefix, ~80-char neutral title |
-| [Reddit](platforms/reddit.md) | Link / self / cross-post | OAuth password grant | Per-subreddit rules and flair |
+| [Reddit](platforms/reddit.md) | Link / self / cross-post | OAuth password grant (grandfathered creds only) | Self-service API closed Nov 2025 (Responsible Builder Policy); new apps need approval |
 | [Twitter / X](platforms/twitter.md) | Tweet / thread | Browser (Chrome); API needs paid credits | 280 chars; new API accounts are pay-per-use |
 | [Discord](platforms/discord.md) | Webhook message / embed | Webhook URL | Rich embeds, up to 2000 chars |
 | [LinkedIn](platforms/linkedin.md) | Text / article share | OAuth 2.0 (`w_member_social`) | 3000 chars, professional tone |
