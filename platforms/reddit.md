@@ -18,7 +18,28 @@
 - OAuth token: POST `https://www.reddit.com/api/v1/access_token` with `grant_type=password`, username, password. Basic auth header with client_id:client_secret.
 - Submit: POST `https://oauth.reddit.com/api/submit` with bearer token.
 
-## Content types
+## Semi-automated manual flow (no API, no Chrome tool)
+Since the API is closed and `reddit.com` is blocked in Claude-in-Chrome, get as far
+as possible without either: **open the prefilled submit page in the user's real
+(logged-in) browser** with the macOS `open` command, and stage the body/image so the
+user only has to paste/attach and click **Post**.
+
+```bash
+# Link post — title + url prefill reliably via query params:
+open "https://www.reddit.com/r/<subreddit>/submit?title=$(python3 -c 'import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1]))' "TITLE")&url=$(python3 -c 'import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1]))' "URL")"
+
+# Text/self post — body (selftext) prefill is unreliable on new Reddit, so put the
+# body on the clipboard for a one-paste fill, and open the page with the title set:
+printf '%s' "BODY MARKDOWN" | pbcopy
+open "https://www.reddit.com/r/<subreddit>/submit?title=$(python3 -c 'import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1]))' "TITLE")"
+```
+
+- **Title + link prefill** via the URL; **body** goes on the clipboard (paste once).
+- **Images/attachments cannot be prefilled** — stage the file at a known path and hand
+  it to the user (clickable `file://` link) to drag in. The user attaches + clicks Post.
+- Public post text in a query string is fine; never put sensitive data there.
+
+## Content types (API — grandfathered creds only)
 - **Link post**: `kind=link`, `title`, `url`, `sr` (subreddit)
 - **Self post**: `kind=self`, `title`, `text` (markdown body), `sr`
 - **Cross-post**: `kind=crosspost`, `crosspost_fullname` (original post t3_id)
