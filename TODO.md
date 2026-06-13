@@ -25,3 +25,27 @@ Two distinct mechanisms to support and document properly — currently glossed o
   - Twitter: show image OR link card, not both
   - Render an actual thumbnail in the Twitter/Discord/LinkedIn link cards (simulate `og:image`), not just domain+title text
   - Optional: fetch/preview the real OG image from the entered URL
+
+## Live-fire test findings (2026-06-12) — preview ≠ reality
+
+Posted the crosspost announcement to X (@dingo_works) + Discord (#primary, Star Gods),
+then compared the live posts to `preview.html`. Confirmed gaps:
+
+- [ ] **Process is backwards.** Posted BEFORE previewing. The flow MUST be
+  **draft → preview (`preview.html`) → human approves → post**. The skill needs to
+  enforce preview-and-approve as a gate, not an afterthought.
+- [ ] **X link card** — real X renders a **large image OG card** (GitHub's preview)
+  and **strips the URL out of the body**; preview shows a small text-only card and
+  keeps the URL inline. Fix both in the preview.
+- [ ] **Discord embed** — real Discord unfurls the URL into an embed whose
+  title/description come from the **page's OG data**, NOT the post body; preview
+  builds the embed from the entered title/body. Fetch real OG for the embed.
+- [ ] **Skill must be content-agnostic** — handle whatever an agent wants to post
+  (any title/body/image/link/intent), not just project announcements.
+
+## Skill flow to bake in (from the live test)
+
+- [ ] Document the working browser flow in the skill: real-keystroke typing for X's
+  and Discord's React composers (`form_input` doesn't fire onChange); Discord posts
+  under the server **nickname**; Reddit is open-prefilled-URL + manual submit
+  (reddit.com blocked in the Chrome tool); X is browser (API pay-per-use paywalled).
