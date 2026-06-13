@@ -13,6 +13,29 @@ to that platform — auth, APIs, format constraints, and step-by-step instructio
 is optional but the default — it's how the human stays in control of what goes public.
 Content is arbitrary (whatever the agent wants to post), not just project announcements.
 
+## Content checklist — run before EVERY post (MANDATORY)
+
+Before anything reaches the preview/post step, verify each item. This is the failure
+these exist to prevent: a post that names a tool in plain text, has no image, and so
+reaches no one.
+
+1. **Tag, don't name.** Every product, company, person, or project named in the post
+   that HAS an account on the target platform MUST be an `@handle`, not plain text.
+   `Claude Code` → `@claudeai`; a named tool/person → their real `@handle`. On
+   X/LinkedIn/Bluesky the @-mention is the *entire distribution mechanism* — plain text
+   gets zero notifications and zero reach. **Look the handle up on the platform; never
+   guess it.** If the entity genuinely has no account, plain text is fine — but check first.
+2. **Attach media.** Default to a real image/video — posts with media far outperform
+   text. **Prefer a real screenshot/recording of the actual thing** over a generated or
+   "illustrative" graphic; fabricated data-looking cards read as fake and erode trust.
+   Text-only only when there is genuinely nothing to show.
+3. **Lead with the hook, not the tech.** One scannable first line.
+4. **Links** per platform norms (URL in body for X/LinkedIn; `url` field for HN).
+5. **Char limit** per platform; verify before submit.
+
+Surface these in the preview so the human approves a post that's actually tagged and
+illustrated — not a bare-text draft. Re-check after any edit.
+
 ## Reality of automation (per platform)
 
 It is **semi-autonomous, not fire-and-forget** — most platforms don't allow headless

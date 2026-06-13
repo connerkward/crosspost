@@ -21,6 +21,10 @@ The OAuth 1.0a app is already configured (Read+Write) with creds in `.env`; read
 - 280 char limit
 - URLs count as ~23 chars regardless of actual length (t.co wrapping)
 - Hashtags, mentions, and media supported; no markdown — plain text only
+- **Run the Content checklist in [../CLAUDE.md](../CLAUDE.md) first.** Especially: **tag
+  entities as `@handles`, never plain text** (e.g. `Claude Code` → `@claudeai`) — the
+  @-mention is the only thing that creates reach/notifications — and **attach a real
+  screenshot** of the actual thing, not a generated/illustrative card.
 - Threads: reply to your own tweet with `reply.in_reply_to_tweet_id` (API) or the reply UI (browser)
 
 ## Notes
