@@ -14,6 +14,14 @@
 - **Cross-post**: `kind=crosspost`, `crosspost_fullname` (original post t3_id)
 
 ## How to post
+Use the helper (handles password grant + submit, reads `.env`):
+
+```
+scripts/post.py reddit --sr <subreddit> --title "<title>" --url <url>       # link post
+scripts/post.py reddit --sr <subreddit> --title "<title>" --text "<body>"   # self post
+```
+
+It prints the new post's permalink on success. By hand:
 1. Get OAuth token via password grant.
 2. POST to `/api/submit` with fields: `api_type=json`, `kind`, `sr`, `title`, `url` or `text`.
 3. Response JSON has `data.url` — the permalink to the new post.
