@@ -11,6 +11,7 @@
 - "Show HN:" prefix when sharing something you built. Required format: `Show HN: <title>`
 
 ## How to post (Claude-in-Chrome)
+Follow the shared flow in [../browser-posting.md](../browser-posting.md) (real session, human-approves-submit, React-input gotcha). HN specifics:
 1. Load the chrome tools; `tabs_context_mcp` to find/confirm the user is logged into news.ycombinator.com (else open a tab and let them log in).
 2. `navigate` to `https://news.ycombinator.com/submit`.
 3. Fill `title`, and `url` (link post) **or** `text` (text post) via `form_input`. Apply the `Show HN: ` prefix when sharing something built.

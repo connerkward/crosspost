@@ -18,7 +18,11 @@
 
 ## How to post
 
-### Text + link post
+**Simplest path — browser (no app/token):** post via the web composer using the
+shared [../browser-posting.md](../browser-posting.md) flow (`https://www.linkedin.com/feed/?shareActive=true`).
+Use the API below only if you want unattended posting and have a valid token.
+
+### Text + link post (API)
 1. Get your person URN: GET `https://api.linkedin.com/v2/userinfo` → use `sub` as author ID.
 2. POST to `https://api.linkedin.com/rest/posts`:
 ```json

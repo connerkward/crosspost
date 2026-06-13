@@ -56,6 +56,21 @@ The same content, reshaped per platform:
 | [mcp-get](platforms/mcp-get.md) | MCP registry (deprecated) | — | Abandoned; points to Smithery |
 | [ComfyUI Registry](platforms/comfyui-registry.md) | Package publish | `comfy-cli` | For ComfyUI custom nodes only |
 
+## Posting methods
+
+Two ways content goes out, per platform:
+
+- **API / webhook** — headless, scriptable, automatable (cron). Used where a free,
+  usable API exists: Discord (webhook), Bluesky (app password), LinkedIn (token),
+  the MCP registries.
+- **Browser ([browser-posting.md](browser-posting.md))** — semi-manual: Claude fills the
+  web composer in your **real logged-in browser**, you approve and click submit. No
+  stored secrets. The right path where there's no usable API (HN), the API is
+  paywalled (X is pay-per-use), or you'd rather not store credentials.
+
+Reddit is neither: its self-service API closed in Nov 2025 (Responsible Builder
+Policy) and `reddit.com` is blocked in the browser tool — so Reddit is **manual**.
+
 ## Adding a platform
 
 Add a markdown file to [`platforms/`](platforms/) with:

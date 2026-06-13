@@ -5,6 +5,7 @@
 - Reason: new X developer accounts enroll in **pay-per-use** (`console.x.com`) — the API charges credits per request and has **no free posting tier**. A POST with $0 balance returns `402 CreditsDepleted`. Verified 2026-06-12 on app `conner-crosspost` / @dingo_works. (The old developer-portal "Free 500/mo" tier no longer applies to new signups.)
 
 ## How to post (Claude-in-Chrome)
+Follow the shared flow in [../browser-posting.md](../browser-posting.md) (real session, human-approves-submit, React-input gotcha). X specifics:
 1. `tabs_context_mcp` to confirm the user is logged into x.com (else open a tab and let them log in).
 2. `navigate` to `https://x.com/compose/post`.
 3. Type the tweet body into the composer. Mind the 280-char limit.
