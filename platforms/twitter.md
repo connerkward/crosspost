@@ -1,36 +1,26 @@
 # Twitter / X
 
-## Auth
-- Twitter API v2 with OAuth 1.0a user context
-- Env: `TWITTER_API_KEY`, `TWITTER_API_SECRET`, `TWITTER_ACCESS_TOKEN`, `TWITTER_ACCESS_SECRET`
-- Create an app at https://developer.x.com — **Free tier posts ~500 tweets/month** (no monthly cost at announce volume). The app's User authentication settings must be **Read and write**; regenerate the Access Token/Secret *after* enabling write, or posts 403.
+## Auth — primary path is the browser (free)
+- **Posting goes through Claude-in-Chrome on the logged-in x.com session.** No credits, no secrets needed for posting.
+- Reason: new X developer accounts enroll in **pay-per-use** (`console.x.com`) — the API charges credits per request and has **no free posting tier**. A POST with $0 balance returns `402 CreditsDepleted`. Verified 2026-06-12 on app `conner-crosspost` / @dingo_works. (The old developer-portal "Free 500/mo" tier no longer applies to new signups.)
 
-## API
-- POST `https://api.twitter.com/2/tweets`
-- OAuth 1.0a signature required on every request
-- Body: `{ "text": "..." }`
+## How to post (Claude-in-Chrome)
+1. `tabs_context_mcp` to confirm the user is logged into x.com (else open a tab and let them log in).
+2. `navigate` to `https://x.com/compose/post`.
+3. Type the tweet body into the composer. Mind the 280-char limit.
+4. **Confirm with the user, then** click **Post**. Capture and return the tweet URL.
+
+## API fallback (only if credits purchased)
+The OAuth 1.0a app is already configured (Read+Write) with creds in `.env`; read-auth verified. It will post **only once the pay-per-use balance is funded** (`console.x.com` → Billing → Credits). Then:
+- POST `https://api.twitter.com/2/tweets`, OAuth 1.0a signed, body `{ "text": "..." }`
+- Env: `TWITTER_API_KEY`, `TWITTER_API_SECRET`, `TWITTER_ACCESS_TOKEN`, `TWITTER_ACCESS_SECRET`
+- The helper supports it: `scripts/post.py twitter --text "<tweet>" [--reply-to <id>]` — prints the tweet URL, or `402 CreditsDepleted` until funded.
 
 ## Content format
 - 280 char limit
 - URLs count as ~23 chars regardless of actual length (t.co wrapping)
-- Hashtags, mentions, and media supported
-- No markdown — plain text only
-- Threads: reply to your own tweet with `reply.in_reply_to_tweet_id`
-
-## How to post
-Use the helper (signs OAuth 1.0a + posts, reads `.env`):
-
-```
-scripts/post.py twitter --text "<tweet>"                       # single tweet
-scripts/post.py twitter --text "<reply>" --reply-to <tweet_id> # thread continuation
-```
-
-It prints the tweet URL on success. (Set `TWITTER_USERNAME` in `.env` for a correct
-URL host; otherwise the path still resolves via `x.com/i/status/<id>`.) By hand:
-1. Compose tweet text. Keep it punchy. Include URL. Hashtags optional.
-2. Sign request with OAuth 1.0a (HMAC-SHA1). Use the 4 env vars.
-3. POST to `/2/tweets` with JSON body `{ "text": "..." }`.
-4. Response has `data.id` — tweet URL is `https://x.com/<username>/status/<id>`.
+- Hashtags, mentions, and media supported; no markdown — plain text only
+- Threads: reply to your own tweet with `reply.in_reply_to_tweet_id` (API) or the reply UI (browser)
 
 ## Notes
 - For project announcements, format: short description + URL + 1-2 relevant hashtags
