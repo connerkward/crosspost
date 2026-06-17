@@ -1,6 +1,6 @@
 # Crosspost
 
-![License: MIT](https://img.shields.io/badge/license-MIT-blue) ![Claude Code](https://img.shields.io/badge/Claude%20Code-harness-d97757) ![Docs not code](https://img.shields.io/badge/docs-not%20code-46d39a) ![Preview-first](https://img.shields.io/badge/flow-preview%20→%20approve%20→%20post-111) ![Platforms](https://img.shields.io/badge/platforms-HN%20·%20Reddit%20·%20X%20·%20Discord%20·%20LinkedIn%20·%20Bluesky-1d9bf0)
+![License: MIT](https://img.shields.io/badge/license-MIT-blue) ![Claude Code](https://img.shields.io/badge/Claude%20Code-harness-d97757) ![Docs not code](https://img.shields.io/badge/docs-not%20code-46d39a) ![Preview-first](https://img.shields.io/badge/flow-preview%20%E2%86%92%20approve%20%E2%86%92%20post-111) ![Platforms](https://img.shields.io/badge/platforms-6%20networks-1d9bf0)
 
 ![Crosspost preview — an input form on the left, live native-looking platform mockups (Hacker News, Reddit, Twitter/X, Discord) on the right](docs/preview-desktop.png)
 
